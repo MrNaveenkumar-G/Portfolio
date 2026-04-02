@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Naveenkumar G — .NET Full Stack Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #0f0f1a;
+      --card: #13131f;
+      --border: #1e1e30;
+      --accent: #00e5ff;
+      --accent2: #7c3aed;
+      --accent3: #10b981;
+      --text: #e8e8f0;
+      --muted: #6b6b8a;
+      --white: #ffffff;
+      --font-head: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.4; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 2rem; display: flex; align-items: center; justify-content: space-between; background: rgba(10,10,15,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--font-head); font-weight: 800; font-size: 1.3rem; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: var(--bg) !important; padding: 0.45rem 1.2rem; border-radius: 6px; font-weight: 600 !important; }
+    .nav-toggle { display: none; background: none; border: 1px solid var(--border); color: var(--text); padding: 0.4rem 0.7rem; border-radius: 6px; cursor: pointer; font-size: 1.2rem; }
+
+    /* HERO */
+    #hero { min-height: 100vh; display: flex; align-items: center; padding: 7rem 2rem 4rem; position: relative; overflow: hidden; }
+    .hero-glow { position: absolute; width: 600px; height: 600px; border-radius: 50%; filter: blur(120px); pointer-events: none; opacity: 0.15; }
+    .hero-glow-1 { background: var(--accent); top: -150px; left: -100px; }
+    .hero-glow-2 { background: var(--accent2); bottom: -200px; right: -150px; }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.2); color: var(--accent); font-size: 0.8rem; font-weight: 600; padding: 0.4rem 1rem; border-radius: 100px; letter-spacing: 0.5px; margin-bottom: 1.5rem; animation: fadeDown 0.6s ease both; }
+    .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent3); animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
+    .hero-name { font-family: var(--font-head); font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -2px; color: var(--white); animation: fadeDown 0.6s 0.1s ease both; }
+    .hero-name .accent-text { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-role { font-size: 1.1rem; color: var(--muted); font-weight: 300; margin: 1.2rem 0 1.8rem; max-width: 520px; line-height: 1.7; animation: fadeDown 0.6s 0.2s ease both; }
+    .hero-role strong { color: var(--text); font-weight: 500; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeDown 0.6s 0.3s ease both; }
+    .btn-primary-custom { background: var(--accent); color: var(--bg); border: none; padding: 0.8rem 2rem; border-radius: 8px; font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s; }
+    .btn-primary-custom:hover { background: #33eeff; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,229,255,0.3); color: var(--bg); }
+    .btn-outline-custom { background: transparent; color: var(--text); border: 1px solid var(--border); padding: 0.8rem 2rem; border-radius: 8px; font-family: var(--font-head); font-weight: 600; font-size: 0.95rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s; }
+    .btn-outline-custom:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .hero-stats { display: flex; gap: 2.5rem; margin-top: 3rem; flex-wrap: wrap; animation: fadeDown 0.6s 0.4s ease both; }
+    .stat-num { font-family: var(--font-head); font-size: 2rem; font-weight: 800; color: var(--white); line-height: 1; }
+    .stat-num span { color: var(--accent); }
+    .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; letter-spacing: 0.5px; text-transform: uppercase; }
+    .hero-visual { position: relative; z-index: 1; animation: fadeLeft 0.8s 0.2s ease both; }
+    .code-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.82rem; line-height: 1.8; color: var(--muted); position: relative; overflow: hidden; }
+    .code-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+    .code-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+    .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #ff5f56; } .dot-y { background: #ffbd2e; } .dot-g { background: #27c93f; }
+    .code-filename { color: var(--muted); font-size: 0.75rem; margin-left: auto; }
+    .c-keyword { color: #c678dd; } .c-class { color: #e5c07b; } .c-string { color: #98c379; } .c-comment { color: #5c6370; font-style: italic; } .c-cyan { color: var(--accent); } .c-num { color: #d19a66; }
+    .floating-tag { position: absolute; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 0.6rem 1rem; font-size: 0.78rem; font-weight: 600; display: flex; align-items: center; gap: 0.4rem; color: var(--text); animation: float 3s ease-in-out infinite; }
+    .tag-1 { top: -20px; right: 20px; } .tag-2 { bottom: 30px; left: -20px; animation-delay: 1s; } .tag-3 { bottom: -15px; right: 40px; animation-delay: 2s; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+    /* SECTIONS */
+    section { padding: 5rem 0; position: relative; }
+    .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
+    .section-title { font-family: var(--font-head); font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: var(--white); letter-spacing: -1px; line-height: 1.1; }
+    .section-sub { color: var(--muted); font-size: 1rem; font-weight: 300; max-width: 500px; line-height: 1.7; margin-top: 0.8rem; }
+    .section-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+
+    /* ABOUT */
+    #about { background: var(--bg2); }
+    .about-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; height: 100%; }
+    .about-photo-wrap { width: 100%; aspect-ratio: 1; max-width: 220px; border-radius: 16px; overflow: hidden; background: linear-gradient(135deg, var(--accent2), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: var(--font-head); font-size: 4rem; font-weight: 800; color: white; margin: 0 auto; position: relative; }
+    .about-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+    .info-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 0.2rem; }
+    .info-value { font-weight: 500; font-size: 0.9rem; color: var(--text); }
+    .info-value a { color: var(--accent); text-decoration: none; }
+
+    /* SKILLS */
+    #skills { background: var(--bg); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem; }
+    .skill-chip { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; text-align: center; transition: all 0.25s; cursor: default; }
+    .skill-chip:hover { border-color: var(--accent); background: rgba(0,229,255,0.05); transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,229,255,0.1); }
+    .skill-icon { font-size: 1.6rem; margin-bottom: 0.5rem; display: block; }
+    .skill-name { font-size: 0.78rem; font-weight: 600; color: var(--text); }
+    .skill-category-title { font-family: var(--font-head); font-size: 0.82rem; font-weight: 700; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin: 2rem 0 1rem; }
+
+    /* EXPERIENCE */
+    #experience { background: var(--bg2); }
+    .exp-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; position: relative; overflow: hidden; transition: all 0.25s; }
+    .exp-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--accent), var(--accent2)); }
+    .exp-card:hover { border-color: var(--accent); transform: translateX(4px); }
+    .exp-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; }
+    .exp-role { font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; color: var(--white); }
+    .exp-company { color: var(--accent); font-weight: 500; font-size: 0.9rem; margin-top: 0.2rem; }
+    .exp-duration { background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.15); color: var(--accent); font-size: 0.78rem; font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 100px; white-space: nowrap; }
+    .exp-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-top: 1rem; }
+    .exp-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
+    .exp-tag { background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.2); color: #a78bfa; font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.7rem; border-radius: 6px; }
+
+    /* PROJECTS */
+    #projects { background: var(--bg); }
+    .project-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; height: 100%; display: flex; flex-direction: column; transition: all 0.3s; position: relative; overflow: hidden; }
+    .project-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .project-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.2rem; }
+    .project-title { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
+    .project-abbr { font-size: 0.75rem; color: var(--muted); font-weight: 500; margin-bottom: 0.8rem; }
+    .project-desc { color: var(--muted); font-size: 0.875rem; line-height: 1.7; flex: 1; }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.5rem; }
+    .stack-tag { background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted); font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 5px; }
+
+    /* AI */
+    #ai-learning { background: var(--bg2); }
+    .ai-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.25s; }
+    .ai-card:hover { border-color: var(--accent3); transform: translateY(-4px); }
+    .ai-card .ai-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .ai-card h5 { font-family: var(--font-head); font-weight: 700; color: var(--white); font-size: 1rem; }
+    .ai-card p { color: var(--muted); font-size: 0.85rem; line-height: 1.6; margin-top: 0.5rem; }
+
+    /* CONTACT */
+    #contact { background: var(--bg); }
+    .contact-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 3rem; text-align: center; position: relative; overflow: hidden; }
+    .contact-card::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 400px; height: 400px; background: radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 70%); pointer-events: none; }
+    .contact-email { font-family: var(--font-head); font-size: clamp(1.1rem, 3vw, 1.8rem); font-weight: 700; color: var(--accent); text-decoration: none; display: inline-block; margin: 1.5rem 0; transition: all 0.2s; }
+    .contact-email:hover { text-shadow: 0 0 30px rgba(0,229,255,0.5); }
+    .social-links { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; }
+    .social-btn { width: 48px; height: 48px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--muted); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; text-decoration: none; transition: all 0.2s; }
+    .social-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--muted); font-size: 0.82rem; }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeLeft { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+
+    .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); z-index: 200; width: 0%; transition: width 0.1s; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border); padding: 1rem 2rem 1.5rem; gap: 1rem; }
+      .nav-toggle { display: block; }
+      .hero-stats { gap: 1.5rem; }
+      .about-info-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); }
+      .contact-card { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">NK<span>.</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#ai-learning">AI Journey</a></li>
+    <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle"><i class="bi bi-list"></i></button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+  <div class="container">
+    <div class="row align-items-center gy-5">
+      <div class="col-lg-7">
+        <div class="hero-content">
+          <div class="hero-badge"><div class="pulse-dot"></div>Available for Opportunities</div>
+          <h1 class="hero-name">Naveenkumar<br><span class="accent-text">G.</span></h1>
+          <p class="hero-role">
+            <strong id="roleCycler">.NET Core Full Stack Developer</strong> with 3+ years crafting scalable web applications. Experienced in C#, React, SQL & ASP.NET Core — now levelling up with <strong>AI integration</strong>.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn-primary-custom"><i class="bi bi-grid-3x3-gap"></i> View Projects</a>
+            <a href="#contact" class="btn-outline-custom"><i class="bi bi-send"></i> Get in Touch</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item"><div class="stat-num">3<span>+</span></div><div class="stat-label">Years Experience</div></div>
+            <div class="stat-item"><div class="stat-num">5<span>+</span></div><div class="stat-label">Projects Built</div></div>
+            <div class="stat-item"><div class="stat-num">∞</div><div class="stat-label">AI Curiosity</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="hero-visual">
+          <div class="floating-tag tag-1"><i class="bi bi-check-circle-fill text-success"></i> ASP.NET Core</div>
+          <div class="code-card">
+            <div class="code-header">
+              <div class="code-dot dot-r"></div>
+              <div class="code-dot dot-y"></div>
+              <div class="code-dot dot-g"></div>
+              <span class="code-filename">developer.cs</span>
+            </div>
+            <span class="c-keyword">public class</span> <span class="c-class">Naveenkumar</span> {<br>
+            &nbsp;&nbsp;<span class="c-keyword">string</span> Role = <span class="c-string">"Full Stack Dev"</span>;<br>
+            &nbsp;&nbsp;<span class="c-keyword">int</span> YearsExp = <span class="c-num">3</span>;<br>
+            &nbsp;&nbsp;<span class="c-keyword">string[]</span> Stack = {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-string">"C#"</span>, <span class="c-string">"ASP.NET Core"</span>,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-string">"React"</span>, <span class="c-string">"SQL"</span>, <span class="c-string">"Git"</span><br>
+            &nbsp;&nbsp;};<br>
+            &nbsp;&nbsp;<span class="c-comment">// Currently learning AI 🤖</span><br>
+            &nbsp;&nbsp;<span class="c-keyword">bool</span> AILearning = <span class="c-cyan">true</span>;<br>
+            }
+          </div>
+          <div class="floating-tag tag-2"><i class="bi bi-robot" style="color:var(--accent)"></i> AI Integrating</div>
+          <div class="floating-tag tag-3"><i class="bi bi-database-fill" style="color:#a78bfa"></i> SQL Expert</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-4 reveal">
+        <div class="about-card text-center">
+          <div class="about-photo-wrap">NK</div>
+          <h3 style="font-family:var(--font-head);font-size:1.3rem;font-weight:800;color:var(--white);margin-top:1.5rem">Naveenkumar G</h3>
+          <p style="color:var(--accent);font-size:0.85rem;font-weight:600;margin-top:0.2rem">.NET Full Stack Developer</p>
+          <div class="about-info-grid" style="text-align:left">
+            <div><div class="info-label">Experience</div><div class="info-value">3+ Years</div></div>
+            <div><div class="info-label">Location</div><div class="info-value">Tamil Nadu, IN</div></div>
+            <div><div class="info-label">Company</div><div class="info-value">Spark IT Tech</div></div>
+            <div><div class="info-label">Status</div><div class="info-value" style="color:var(--accent3)">● Full Time</div></div>
+          </div>
+          <a href="#contact" class="btn-primary-custom mt-4" style="width:100%;justify-content:center"><i class="bi bi-envelope"></i> Contact Me</a>
+        </div>
+      </div>
+      <div class="col-lg-8 reveal">
+        <div class="about-card">
+          <p class="section-label">About Me</p>
+          <h2 class="section-title" style="font-size:2rem">Crafting Scalable Web<br>Apps with Purpose</h2>
+          <p style="color:var(--muted);line-height:1.8;margin-top:1.2rem;font-size:0.95rem">I'm a passionate <strong style="color:var(--text)">.NET Core Full Stack Developer</strong> with 3+ years of hands-on experience building real-world enterprise web applications. I specialize in creating scalable, maintainable systems using <strong style="color:var(--text)">C#, ASP.NET Core, React, and SQL</strong>.</p>
+          <p style="color:var(--muted);line-height:1.8;margin-top:1rem;font-size:0.95rem">Currently working full-time at <strong style="color:var(--accent)">Spark IT Tech</strong>, I have led development of major enterprise projects — Online Ordering Portals, Supplier Chain Management, and Vendor Portals — complex multi-module systems used in production.</p>
+          <p style="color:var(--muted);line-height:1.8;margin-top:1rem;font-size:0.95rem">Beyond work, I'm actively learning <strong style="color:var(--accent3)">Artificial Intelligence</strong> and have already built an AI-powered Frames website — bridging traditional full-stack skills with modern AI capabilities.</p>
+          <div class="row mt-4 g-3">
+            <div class="col-6 col-md-3"><div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center"><div style="font-family:var(--font-head);font-size:1.5rem;font-weight:800;color:var(--white)">3<span style="color:var(--accent)">+</span></div><div style="font-size:0.72rem;color:var(--muted);margin-top:0.2rem">Years</div></div></div>
+            <div class="col-6 col-md-3"><div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center"><div style="font-family:var(--font-head);font-size:1.5rem;font-weight:800;color:var(--white)">5<span style="color:var(--accent)">+</span></div><div style="font-size:0.72rem;color:var(--muted);margin-top:0.2rem">Projects</div></div></div>
+            <div class="col-6 col-md-3"><div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center"><div style="font-family:var(--font-head);font-size:1.5rem;font-weight:800;color:var(--white)">15<span style="color:var(--accent)">+</span></div><div style="font-size:0.72rem;color:var(--muted);margin-top:0.2rem">Skills</div></div></div>
+            <div class="col-6 col-md-3"><div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center"><div style="font-family:var(--font-head);font-size:1.5rem;font-weight:800;color:var(--white)">1<span style="color:var(--accent)">+</span></div><div style="font-size:0.72rem;color:var(--muted);margin-top:0.2rem">AI Apps</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 reveal">
+        <p class="section-label">What I Know</p>
+        <h2 class="section-title">Technical<br>Skills</h2>
+        <p class="section-sub">A versatile stack spanning backend, frontend, databases and design.</p>
+      </div>
+      <div class="col-lg-8 reveal">
+        <div class="skill-category-title">Backend & Frameworks</div>
+        <div class="skills-grid">
+          <div class="skill-chip"><span class="skill-icon">⚙️</span><div class="skill-name">C#</div></div>
+          <div class="skill-chip"><span class="skill-icon">🔷</span><div class="skill-name">ASP.NET Core</div></div>
+          <div class="skill-chip"><span class="skill-icon">🌐</span><div class="skill-name">ASP.NET MVC</div></div>
+          <div class="skill-chip"><span class="skill-icon">📦</span><div class="skill-name">.NET Framework</div></div>
+          <div class="skill-chip"><span class="skill-icon">⏰</span><div class="skill-name">Hangfire</div></div>
+        </div>
+        <div class="skill-category-title">Frontend & UI</div>
+        <div class="skills-grid">
+          <div class="skill-chip"><span class="skill-icon">⚛️</span><div class="skill-name">React</div></div>
+          <div class="skill-chip"><span class="skill-icon">🟨</span><div class="skill-name">JavaScript</div></div>
+          <div class="skill-chip"><span class="skill-icon">💛</span><div class="skill-name">jQuery</div></div>
+          <div class="skill-chip"><span class="skill-icon">🎨</span><div class="skill-name">CSS3</div></div>
+          <div class="skill-chip"><span class="skill-icon">🅱️</span><div class="skill-name">Bootstrap</div></div>
+          <div class="skill-chip"><span class="skill-icon">🔖</span><div class="skill-name">HTML5</div></div>
+          <div class="skill-chip"><span class="skill-icon">📄</span><div class="skill-name">Handlebars.js</div></div>
+          <div class="skill-chip"><span class="skill-icon">🔄</span><div class="skill-name">Ajax</div></div>
+        </div>
+        <div class="skill-category-title">Data & Tools</div>
+        <div class="skills-grid">
+          <div class="skill-chip"><span class="skill-icon">🗄️</span><div class="skill-name">SQL</div></div>
+          <div class="skill-chip"><span class="skill-icon">🐬</span><div class="skill-name">MySQL</div></div>
+          <div class="skill-chip"><span class="skill-icon">📋</span><div class="skill-name">JSON</div></div>
+          <div class="skill-chip"><span class="skill-icon">🐙</span><div class="skill-name">Git</div></div>
+          <div class="skill-chip"><span class="skill-icon">🎨</span><div class="skill-name">Web Design</div></div>
+          <div class="skill-chip"><span class="skill-icon">🧩</span><div class="skill-name">Problem Solving</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="text-center reveal mb-5">
+      <p class="section-label">Work History</p>
+      <h2 class="section-title">Experience</h2>
+      <p class="section-sub mx-auto">Real-world enterprise experience building production-grade systems.</p>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+        <div class="exp-card reveal">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">.NET Core Full Stack Developer</div>
+              <div class="exp-company">🏢 Spark IT Tech</div>
+            </div>
+            <div class="exp-duration">2022 – Present · Full Time</div>
+          </div>
+          <p class="exp-desc">Working full-time building and maintaining scalable enterprise web applications. Responsible for end-to-end development — from database design and backend APIs to frontend UI. Architected the Online Ordering Portal (OOP), its Back Office configuration system, Supplier Chain Management (SCM), and Vendor Portal — all production-grade, multi-module systems with real business impact.</p>
+          <div class="exp-tags">
+            <span class="exp-tag">C#</span><span class="exp-tag">ASP.NET Core</span><span class="exp-tag">SQL</span><span class="exp-tag">React</span><span class="exp-tag">Bootstrap</span><span class="exp-tag">Hangfire</span><span class="exp-tag">jQuery</span><span class="exp-tag">MVC</span><span class="exp-tag">Git</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="text-center reveal mb-5">
+      <p class="section-label">What I've Built</p>
+      <h2 class="section-title">Projects</h2>
+      <p class="section-sub mx-auto">Enterprise-level applications handling real business workflows.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4 reveal">
+        <div class="project-card">
+          <div class="project-icon" style="background:rgba(0,229,255,0.1)">🛒</div>
+          <div class="project-title">Online Ordering Portal</div>
+          <div class="project-abbr">OOP — Main Customer Portal</div>
+          <p class="project-desc">A full-featured online ordering platform serving as the main customer-facing portal. Handles product catalogues, order management, user authentication, and real-time order tracking at scale.</p>
+          <div class="project-stack"><span class="stack-tag">ASP.NET Core</span><span class="stack-tag">C#</span><span class="stack-tag">SQL</span><span class="stack-tag">Bootstrap</span><span class="stack-tag">jQuery</span></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 reveal">
+        <div class="project-card">
+          <div class="project-icon" style="background:rgba(124,58,237,0.12)">⚙️</div>
+          <div class="project-title">Back Office System</div>
+          <div class="project-abbr">OOP Configuration & Admin</div>
+          <p class="project-desc">The backend configuration portal for OOP. Enables admins to manage products, pricing, orders, users, and system settings. A complex multi-module admin system tightly integrated with the main portal.</p>
+          <div class="project-stack"><span class="stack-tag">ASP.NET MVC</span><span class="stack-tag">C#</span><span class="stack-tag">SQL</span><span class="stack-tag">Hangfire</span><span class="stack-tag">Ajax</span></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 reveal">
+        <div class="project-card">
+          <div class="project-icon" style="background:rgba(16,185,129,0.1)">🔗</div>
+          <div class="project-title">Supplier Chain Management</div>
+          <div class="project-abbr">SCM — Supply Chain Platform</div>
+          <p class="project-desc">An end-to-end supply chain management system for tracking suppliers, inventory, purchase orders, and delivery workflows. Built for reliability and real-time data synchronization across the supply network.</p>
+          <div class="project-stack"><span class="stack-tag">ASP.NET Core</span><span class="stack-tag">C#</span><span class="stack-tag">MySQL</span><span class="stack-tag">JSON APIs</span><span class="stack-tag">Bootstrap</span></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 reveal">
+        <div class="project-card">
+          <div class="project-icon" style="background:rgba(251,146,60,0.1)">🏪</div>
+          <div class="project-title">Vendor Portal</div>
+          <div class="project-abbr">Supplier Self-Service Portal</div>
+          <p class="project-desc">A dedicated portal for vendors to manage their products, pricing, invoices, and communication with the organization. Streamlines vendor onboarding and operations significantly.</p>
+          <div class="project-stack"><span class="stack-tag">ASP.NET Core</span><span class="stack-tag">C#</span><span class="stack-tag">SQL</span><span class="stack-tag">Handlebars.js</span><span class="stack-tag">CSS3</span></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 reveal">
+        <div class="project-card" style="border-color:rgba(0,229,255,0.25)">
+          <div class="project-icon" style="background:rgba(0,229,255,0.1)">🤖</div>
+          <div class="project-title">AI Frames Website</div>
+          <div class="project-abbr">AI-Powered Web Application</div>
+          <p class="project-desc">A modern frames website built using AI tools — showcasing the ability to leverage AI in real product development. Represents the bridge between traditional full-stack skills and modern AI capabilities.</p>
+          <div class="project-stack"><span class="stack-tag">AI Tools</span><span class="stack-tag">HTML5</span><span class="stack-tag">CSS3</span><span class="stack-tag">JavaScript</span><span class="stack-tag">Bootstrap</span></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 reveal">
+        <div class="project-card" style="border-style:dashed;justify-content:center;align-items:center;text-align:center;min-height:280px">
+          <div style="font-size:2.5rem;margin-bottom:1rem">🚀</div>
+          <div class="project-title" style="color:var(--muted)">Next Project</div>
+          <p class="project-desc" style="margin-top:0.5rem">Currently building something new with AI integration. Stay tuned!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- AI JOURNEY -->
+<section id="ai-learning">
+  <div class="container">
+    <div class="text-center reveal mb-5">
+      <p class="section-label">Current Focus</p>
+      <h2 class="section-title">AI Journey 🤖</h2>
+      <p class="section-sub mx-auto">Bridging traditional .NET expertise with modern AI capabilities.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3 reveal"><div class="ai-card"><div class="ai-icon">🧠</div><h5>AI-Assisted Dev</h5><p>Using AI tools to accelerate development workflows — code generation, debugging, and architecture decisions.</p></div></div>
+      <div class="col-md-6 col-lg-3 reveal"><div class="ai-card"><div class="ai-icon">🎨</div><h5>AI Web Building</h5><p>Already shipped an AI-powered Frames website — practical proof of using AI in real product delivery.</p></div></div>
+      <div class="col-md-6 col-lg-3 reveal"><div class="ai-card"><div class="ai-icon">🔗</div><h5>API Integration</h5><p>Integrating AI APIs into .NET Core backends to add intelligent features to web applications.</p></div></div>
+      <div class="col-md-6 col-lg-3 reveal"><div class="ai-card"><div class="ai-icon">📈</div><h5>Continuous Learning</h5><p>Exploring prompt engineering, LLMs, and AI-augmented full-stack development patterns.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 reveal">
+        <div class="contact-card">
+          <p class="section-label" style="display:flex;justify-content:center">Let's Work Together</p>
+          <h2 class="section-title" style="font-size:2.2rem">Got a project in mind?</h2>
+          <p style="color:var(--muted);margin-top:1rem;font-size:0.95rem;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.7">Open to full-stack .NET opportunities, AI integration projects, and collaboration. Let's build something great.</p>
+          <a href="mailto:naveenkumarg@email.com" class="contact-email">naveenkumarg@email.com</a>
+          <div class="social-links">
+            <a href="https://github.com/naveenkumarg" target="_blank" class="social-btn" title="GitHub"><i class="bi bi-github"></i></a>
+            <a href="https://linkedin.com/in/naveenkumarg" target="_blank" class="social-btn" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            <a href="https://twitter.com/naveenkumarg" target="_blank" class="social-btn" title="Twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="mailto:naveenkumarg@email.com" class="social-btn" title="Email"><i class="bi bi-envelope-fill"></i></a>
+          </div>
+          <div style="margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border)">
+            <a href="mailto:naveenkumarg@email.com" class="btn-primary-custom" style="margin-right:1rem"><i class="bi bi-send-fill"></i> Send Message</a>
+            <a href="#" class="btn-outline-custom"><i class="bi bi-download"></i> Resume</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed & Built by <a href="#">Naveenkumar G</a> · .NET Full Stack Developer · Tamil Nadu, India</p>
+  <p style="margin-top:0.5rem;color:#3a3a55">Made with ❤️ using HTML, CSS, JS & Bootstrap · Hosted on GitHub Pages</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // NAV TOGGLE
+  document.getElementById('navToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+
+  // SCROLL PROGRESS
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('scrollProgress').style.width = (scrollTop / docHeight * 100) + '%';
+  });
+
+  // REVEAL ON SCROLL
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ACTIVE NAV
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.style.color = link.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+    });
+  });
+
+  // ROLE CYCLER
+  const roles = ['.NET Core Full Stack Developer', 'ASP.NET Core Expert', 'AI Enthusiast', 'Enterprise Web Builder'];
+  let ri = 0;
+  const roleCycler = document.getElementById('roleCycler');
+  roleCycler.style.transition = 'opacity 0.3s ease';
+  setInterval(() => {
+    roleCycler.style.opacity = '0';
+    setTimeout(() => {
+      ri = (ri + 1) % roles.length;
+      roleCycler.textContent = roles[ri];
+      roleCycler.style.opacity = '1';
+    }, 300);
+  }, 2800);
+</script>
+</body>
+</html>
